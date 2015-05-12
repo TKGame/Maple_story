@@ -48,7 +48,11 @@
   <ItemGroup>
      <Compile Include="Assets\scrips_tobi\BossController.cs" />
      <Compile Include="Assets\scrips_tobi\Direction.cs" />
+     <Compile Include="Assets\scrips_tobi\FrontCheck.cs" />
+     <Compile Include="Assets\scrips_tobi\HitAttack2.cs" />
      <Compile Include="Assets\scrips_tobi\PlayerController.cs" />
+     <None Include="Assets\Sprite_tobi\Boot2\Readme.txt" />
+     <None Include="Assets\Prefabs_tobi\Readme.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

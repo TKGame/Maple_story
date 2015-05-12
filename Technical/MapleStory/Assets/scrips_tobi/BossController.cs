@@ -16,23 +16,46 @@ public class BossController : MonoBehaviour {
 	float startTime =0.0f;
 
 	public float distanceTime = 0.0f;
-	
+
 	public static bool facingRight = false;	
+
+	public GameObject frontCheck;
+
+	public static bool isAttack2 = false;
+
+	public GameObject hitAttack2;
 	// Use this for initialization
 	void Start () {
 		anim = gameObject.GetComponent<Animator>();
 	}   
-
-
-
+	
 	public void FixedUpdate()
 	{
 		Flip ();
 		distanceX = Mathf.Abs( transform.position.x - player.transform.position.x);
 
-		AutoFindPlayer (distanceX);
+		if (distanceX <11.0f && distanceX > 10.0f) {
+			Attack2 ();
+		} else {
+			AutoFindPlayer (distanceX);
+		}
+	}
 
+	void Attack2()
+	{
+		anim.SetBool ("isAttack2", true);
+	}
 
+	public void CreateHitAttack2()
+	{
+		Instantiate (hitAttack2, new Vector3(transform.position.x-1,transform.position.y -1 , transform.position.z),transform.rotation);
+	}
+
+	public void UnSetAttiveAttack2()
+	{
+		//frontCheck.SetActive (false);
+		isAttack2 = false;
+		anim.SetBool ("isAttack2", isAttack2);
 	}
 
 	// khi ngoai khoang cach tan cong -> di chuyen theo player
@@ -50,29 +73,34 @@ public class BossController : MonoBehaviour {
 	public void Attack()
 	{
 		subTime = Time.time - startTime;
-		
 		if (subTime > distanceTime) {
-			int num = Random.Range(0,2);
+			int num = Random.Range(0,3);
 			{
 				if(num == 0)
 				{
 					Attack1();
 				}
-				else
+				else if(num ==1)
 				{
 					Attack4();
+				}
+				else 
+				{
+					Attack3();
 				}
 			}
 			startTime = Time.time;
 		}
 	}
-	
+
+	// di chuyen
 	public void AutoMove(float distance)
 	{
 		anim.SetBool ("isMove", true);
 		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed,0.0f);
 	}
-	
+
+	// xoay
 	void Flip ()
 	{
 		if (facingRight) {
@@ -93,11 +121,17 @@ public class BossController : MonoBehaviour {
 		anim.SetBool ("isMove", false);
 	}
 
-	void Attack2()
+	void Attack3()
 	{
-		anim.SetBool ("isAttack2", true);
+		anim.SetBool ("isAttack3", true);
 		anim.SetBool ("isMove", false);
 	}
+
+	//void Attack2()
+	//{
+	//	anim.SetBool ("isAttack2", true);
+	//	anim.SetBool ("isMove", false);
+	//}
 
 	void Attack4()
 	{
@@ -111,6 +145,7 @@ public class BossController : MonoBehaviour {
 		anim.SetTrigger ("stand");
 		anim.SetBool ("isAttack4", false);
 		anim.SetBool ("isAttack1", false);
+		anim.SetBool ("isAttack3", false);
 	}
 	
 	// xét va chạm của các Colliser2D khi boss tấn công
